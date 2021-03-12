@@ -1,0 +1,9 @@
+glass/break   DSGLASS
+$limit    glass/break 0
+$pitchshift    glass/break 3
+$rolloff    glass/break 1000 2000
+
+rubble/break   RUBBLE1
+$limit    rubble/break 0
+$pitchshift    rubble/break 3
+$rolloff    rubble/break 1000 2000

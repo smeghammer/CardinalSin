@@ -1,0 +1,6 @@
+switch MOSAIC5
+   on sound rubble/break
+   pic WEB1_F tics 0
+   
+   off
+   pic WEB1_F tics 0

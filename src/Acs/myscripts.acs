@@ -1,0 +1,247 @@
+#library "myscripts.acs"
+#include "zcommon.acs"
+
+int lift_lowered = 0;
+int doors_open = 0;
+int on_dock = 0;
+int loaded = 0;
+//int secret_door_open_by = 0;
+
+function void conveyorSounds(int buzzerTID, int conveyorTID){
+	log(s:"playing buzzer:");
+	PlaySound(buzzerTID, "BUZZER", CHAN_AUTO, 1.0,false);
+	PlaySound(buzzerTID, "BUZZER", CHAN_AUTO, 0.0,false);	//because Delay() doesn't work in functions
+	if(conveyorTID){
+		log(s:"playing conveyor:");
+		PlaySound(conveyorTID, "CONVEYOR", CHAN_AUTO, 0.5, true, ATTN_STATIC); 
+	}
+}
+
+
+script 10 ENTER {
+	Sector_SetCeilingPanning(66, 0, 0, 16, 0);
+	
+	/* compstations in secret gallery */
+	Sector_SetFloorPanning(69, 0, 0, -16, 0);
+	Sector_SetFloorPanning(70, 32, 0, 0, 0);
+	
+	/* lift floor in middle corridor */
+	Sector_SetFloorPanning(64, 0, 0, -16, 0);
+}
+
+/*
+SCRIPT 1:
+---------
+Start the conveyor and simulate the crates moving to lift:
+ - animate the floor
+ - lower the floor of the crates
+ - open the door to next section
+(NOTE: line special an ACS args are in different order!
+https://forum.zdoom.org/viewtopic.php?t=634)
+*/
+script 1 (void){
+	log(s:"starting conveyor...");	
+	conveyorSounds(3, 4);
+	scroll_floor(1,-48,0,2);
+	scroll_floor(3,-48,0,2);
+	scroll_floor(4,-48,0,2);
+	scroll_floor(5,-48,0,2); 
+	Floor_LowerByValue(3,64,64);	//big crates
+	Floor_LowerByValue(5,64,32);	//small crate
+	Door_Open(4,32,0);		//Door
+	ChangeFloor(3, "STEP1");
+	ChangeFloor(5, "STEP1");
+	// tag, speed, height
+	Floor_LowerByValue(68, 8, 64);
+
+	/* open first monster trap */
+	Ceiling_RaiseByValue(47,32,56);
+}
+
+/* 
+SCRIPT 2
+--------
+Lower the lift to ground floor:
+Note - because I need to drop the crates into the floor as above (next script),
+I can't use the lower floor line special directly on the switch.
+ */
+script 2 (void){
+	log(s:"lowering plats");
+	conveyorSounds(5, FALSE);
+	Floor_LowerByValueTimes8(13,8,31);
+	Floor_LowerByValueTimes8(49,8,31);
+	Floor_LowerByValueTimes8(50,8,31);
+	lift_lowered = 1;
+}
+
+
+
+/* SCRIPT 3:
+------------
+Move creates to crane:
+ - Animate the second conveyor
+ - drop crates into floor
+ - reset floor flat
+ - raise crates on pier
+ - set their floors to cratop
+*/
+script 3 (void){
+	if(doors_open == 1){
+		if(lift_lowered == 1){
+			if(on_dock == 0){
+				/* hide crates on lift: */
+				Floor_LowerByValue(49,64,64);
+				Floor_LowerByValue(50,64,32);
+				ChangeFloor(49, "FLAT23");
+				ChangeFloor(50, "FLAT23");
+
+				/* start the conveyor 6,7,8, 48,65 */
+				scroll_floor(6,0,48,2);
+				scroll_floor(7,0,48,2);
+				scroll_floor(8,0,48,2);
+				scroll_floor(48,0,48,2);
+				scroll_floor(65,0,48,2);
+
+				/* raise crates on platform at end of pier (53, 54,55)*/
+				FloorAndCeiling_RaiseByValue(56,64,128);
+				
+				/* play warning buzzer */
+				conveyorSounds(6, 7);
+
+				/* set on_dock flag to true */
+				on_dock = 1;
+
+				/* and also raise light level of lighthouse (tag 80) to 255 */
+				Light_Fade(80, 255, 70);
+
+				/* open monster closet at bottom */
+				Door_Open(81, 64);
+				
+				/* open lighthouse monster trap */
+				log(s:"lowering cyberimp lighthouse traps");
+				Floor_LowerByValue(84,64,64);
+				log(s:"lowered cyberimp lighthouse traps");
+			}
+			else{
+				print(s:"On dock already.");
+			}
+		}
+		else{
+			print(s:"You need to lower the platform");
+		}
+	}
+	else{
+		print(s:"Open the main doors!");
+	}
+}
+
+/*
+Move crates to ship:
+Do this from first control room, so we have to go back?
+ - drop pier crates into floor
+ - reset flats
+ - raise crates on ship
+ - reset THEIR floors
+ - enable ship bridge exit switch
+*/
+script 4 (void){
+	if(on_dock == 1){
+		if(loaded != 1){
+			print(s:"loading crates onto boat...");
+			/* load the crates onto the ship, including the one on the crane
+			This needs to be done out of sight 'cos it's all smoke and mirrors... */
+
+			/* hide the crates on platform at end of pier again */
+			FloorAndCeiling_LowerByValue(56,64,128);
+
+			/* lower the control sector for the crane crate out of sight (62, 63)*/
+			FloorAndCeiling_LowerByValue(62,64,192);
+			FloorAndCeiling_LowerByValue(63,64,192);
+			
+			/* open second (LH) monster trap */
+			Floor_LowerByValue(82,64,64);
+			
+			/* raise crates on ship to represent the ones being loaded from the conveyor and the crane */
+			Floor_RaiseByValue(58,64,64);
+			Floor_RaiseByValue(59,64,96);
+			Floor_RaiseByValue(60,64,64);
+			Floor_RaiseByValue(61,64,64);
+			ChangeFloor(58, "CRATOP2");
+			ChangeFloor(59, "CRATOP1");
+			ChangeFloor(60, "CRATOP1");
+			ChangeFloor(61, "CRATOP2");
+
+			/* and set the exit flag to true: */
+			loaded = 1;
+		}
+		else{
+			print(s:"All loaded OK");
+		}
+	}
+	/* otherwise do nothing */
+	else{
+		print(s:"Nothing to load yet...");	
+	}
+}
+
+/*
+Exit the level, or just alert the player to finish loading:
+*/
+script 5 (void){
+	if(loaded == 1){
+		print(s:"Leaving dock");
+		Exit_Normal(0);	}
+	else{
+		print(s:"Finish loading the crates!");
+	}
+}
+
+/* SCRIPT 6:
+------------
+open main exit doors */
+script 6 (void){
+	if(doors_open == 0){
+		doors_open = 1;
+		Ceiling_RaiseByValue(65, 8, 112);
+	}
+	else{
+		print(s:"Main doors open already.");
+	}
+}
+
+/* 
+Open secret exit
+TODO:
+*/
+script 7 (void){
+	SetResultValue( FALSE ); 
+	int z = GetSectorCeilingZ(84, -1552, -32);
+	print(f:z);
+	if(z >= 116){
+		print(s:"playing sound");
+		PlaySound(11, "DOORSCRP");
+		Ceiling_RaiseByValue(84, 4, 8);
+		//secret_door_open_by = secret_door_open_by + 8;
+		//int z = GetSectorCeilingZ(84, -1552, -32);
+		print(f:z);
+		Delay(32);
+	}
+	
+}
+
+
+/* scripts for secret level E1M8 */
+script 20 (void){
+	/* loop while still alive */
+	print(i:ThingCount(31004, 0));
+	While(ThingCount(31004, 0) > 0){
+		Delay(35);
+	}
+	log(s:"All flamer barons killed! Time to go...");
+	//now separate the exit teleporters:
+	//TODO: open exit door
+	Door_Open(21, 12);
+}
+
+
+
