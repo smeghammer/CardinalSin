@@ -2,6 +2,6 @@
 
 Heretic map
 
-## MAP01
+## E1M1
 ### Cardinal Sin
 
