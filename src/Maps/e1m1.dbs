@@ -1,0 +1,51 @@
+type = "Doom Builder Map Settings Configuration";
+gameconfig = "GZDoom_HereticHexen.cfg";
+strictpatches = 0;
+
+maps
+{
+	
+	E1M1
+	{
+		defaultceiltexture = "F_SKY1";
+		overridefloorheight = false;
+		customfloorheight = 0;
+		uselongtexturenames = false;
+		scriptcompiler = "zdoom_acs.cfg";
+		
+		resources
+		{
+		}
+		overrideceiltexture = false;
+		viewpositionx = 2165.016f;
+		defaulttoptexture = "METL2";
+		overrideceilheight = false;
+		useresourcesinreadonlymode = false;
+		overridebrightness = false;
+		overridefloortexture = false;
+		
+		grid
+		{
+			backoffsetx = 0;
+			backsource = 0;
+			gridoriginy = 0f;
+			backscaley = 100;
+			gridrotate = 0f;
+			backscalex = 100;
+			gridoriginx = 0f;
+			gridsize = 128f;
+			background = "";
+			backoffsety = 0;
+		}
+		overridebottomtexture = false;
+		defaultbottomtexture = "METL2";
+		defaultfloortexture = "FLOOR10";
+		viewpositiony = 822.9019f;
+		defaultwalltexture = "METL2";
+		overridetoptexture = false;
+		customceilheight = 128;
+		overridemiddletexture = false;
+		custombrightness = 196;
+		viewscale = 0.2449613f;
+	}
+}
