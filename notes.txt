@@ -4,3 +4,22 @@ https://forum.zdoom.org/viewtopic.php?f=39&t=52575
 https://forum.zdoom.org/viewtopic.php?f=39&t=52575
 
 Islands - ruins on them?
+
+ - lava area exit (on lift) opened by killing priest		DONE
+ - blue key opened by switch in tooth island				DONE
+	- reworked: LH islan switch opens bars in RH 
+	  tooth island
+ - misaligned tex in stairs									DONE
+ - wrong text in yellow key area							DONE
+ - message afte opening blue key bars						DONE
+ - teleport from blue key back to exit area?				DONE
+ - second exit platform raises - texturers are wrong		DONE
+ - floor of torch in stairs - change tex. (nea top)			DONE
+ - remove damage from island seas							DONE
+ - teleport exit from lava area?							maybe a corridor from switch to next room?
+ - block beast from using tele								DONE
+ - tele in blue key area not workig?						DONE
+ - tex on bars in lava room									DONE
+ - blue key door - flats?									OK?
+ - switch logic for exit.									
+ - secret in head room?									

@@ -41,3 +41,13 @@ script 3 (void){
 	print(s:"Now you can leave...");
 }
 
+/* 
+SCRIPT 4:
+---------
+Open blue key access, with message:
+*/
+
+script 4 (void){
+	FloorAndCeiling_LowerRaise(1,12,12);
+	print(s:"Blue key is now accessible.");
+}
