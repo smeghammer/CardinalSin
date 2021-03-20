@@ -1,5 +1,10 @@
+episode E0M1
+{
+	name="Cardinal Sin"
+}
 
-map E1M1 "Cardinal Sin"
+
+map E0M1 "Acolyte's Demise"
 {
 	levelnum=1
 	sky1 = "SKY2"
