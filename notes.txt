@@ -21,5 +21,8 @@ Islands - ruins on them?
  - tele in blue key area not workig?						DONE
  - tex on bars in lava room									DONE
  - blue key door - flats?									OK?
- - switch logic for exit.									
+ - switch logic for exit.									OK
  - secret in head room?									
+
+
+Ceiling_RaiseByValue(9,12,92)

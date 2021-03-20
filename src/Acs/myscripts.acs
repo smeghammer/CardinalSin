@@ -3,6 +3,16 @@
 
 
 /*
+SCRIPT OPEN:
+---------
+raise bridges in lava room:
+*/
+script 100 OPEN{
+	SetLineSpecial(1,80,5);
+}
+
+
+/*
 SCRIPT 1:
 ---------
 raise bridges in lava room:
@@ -51,3 +61,16 @@ script 4 (void){
 	FloorAndCeiling_LowerRaise(1,12,12);
 	print(s:"Blue key is now accessible.");
 }
+
+/* 
+SCRIPT 5:
+---------
+Open secret in stair maze, with message:
+*/
+script 5 (void){
+	Ceiling_RaiseByValue(9,12,92);
+	print(s:"A secret door opened.");
+	SetLineTexture(1, SIDE_FRONT, TEXTURE_MIDDLE, "SW1ON");
+}
+
+
