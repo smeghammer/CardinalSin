@@ -24,7 +24,7 @@ Islands - ruins on them?
  - switch logic for exit.									OK
  - secret in head room?									
  - fixed flats in exit room
-
+ - updated .pk3
 Ceiling_RaiseByValue(9,12,92)
 
 added edpisode 6 def
