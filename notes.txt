@@ -26,3 +26,5 @@ Islands - ruins on them?
 
 
 Ceiling_RaiseByValue(9,12,92)
+
+added edpisode 6 def
