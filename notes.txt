@@ -23,7 +23,7 @@ Islands - ruins on them?
  - blue key door - flats?									OK?
  - switch logic for exit.									OK
  - secret in head room?									
-
+ - fixed flats in exit room
 
 Ceiling_RaiseByValue(9,12,92)
 
