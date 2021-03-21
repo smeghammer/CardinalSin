@@ -5,6 +5,16 @@ https://forum.zdoom.org/viewtopic.php?f=39&t=52575
 
 Islands - ruins on them?
 
+teleports on islands:
+---------------------
+from lava hallway:
+linedef - tag 29
+to LH island, LH tele
+lindef tag 34, back to lava hallway.
+LH island, RH tele
+linedef - tag 32
+to LH tele RH island
+
  - lava area exit (on lift) opened by killing priest		DONE
  - blue key opened by switch in tooth island				DONE
 	- reworked: LH islan switch opens bars in RH 
@@ -25,6 +35,15 @@ Islands - ruins on them?
  - secret in head room?									
  - fixed flats in exit room
  - updated .pk3
+ - make exit atrium so vieing the black road is better
+ fixed an unpegged doortrack
+
+implement feedback from dubbag and omniplex:
+ - skill levels on ammo
+ - keys more obvious?teleport in and out more obvious
+ - tidy up exit road room?
+
+
 Ceiling_RaiseByValue(9,12,92)
 
 added edpisode 6 def
