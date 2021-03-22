@@ -7,7 +7,7 @@ map E0M1 "Acolyte's Demise"
 {
 	levelnum=1
 	sky1 = "SKY2"
-	next="E0M2"
+	next="E1M2"
 	secretnext="E1M9"
 	music="MUS_E1M7"
 	NoJump
